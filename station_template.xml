@@ -1,0 +1,9 @@
+<REQUEST>
+      <LOGIN authenticationkey="{apikey}" />
+      <QUERY objecttype="TrainStation">
+            <FILTER />
+<INCLUDE>AdvertisedLocationName</INCLUDE>
+<INCLUDE>LocationSignature</INCLUDE>
+<INCLUDE>CountryCode</INCLUDE>
+      </QUERY>
+</REQUEST>

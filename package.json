@@ -1,0 +1,14 @@
+{
+  "name": "swedish_train-info",
+  "version": "1.0.0",
+  "description": "A node.js wrapper for Trafikverket's API",
+  "main": "train_info.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Peter Ahlstrom",
+  "license": "MIT",
+  "dependencies": {
+    "cached-request": "~0.1.4"
+  }
+}
