@@ -1,4 +1,4 @@
 {
-	"api_key": "insert your api key here", //get you own at http://api.trafikinfo.trafikverket.se/
-	"server_port": "3000" //the port your application listen on
+	"api_key": "insert your api key here",
+	"server_port": "3000"
 	}
