@@ -1,0 +1,31 @@
+body{
+	font-family: sans-serif;
+}
+li{
+	list-style-type: none;
+}
+#title{
+	font-weight: bold;
+}
+td{
+	width: 10em;
+	padding: 0.6em;
+}
+tr:nth-child(even) {
+	background: #CCC;
+}
+tr:nth-child(odd) {
+	background: #FFF;
+}
+small {
+	font-weight: normal;
+}
+th {
+	text-align: left;
+}
+tr td:first-child {
+	width: 14em;
+}
+td span {
+	padding-left: 2em;
+}
