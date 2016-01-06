@@ -21,6 +21,7 @@ function readReq(trainId){
 
 function post(trainId, callback, res){
 	var xmlReq = readReq(trainId.toString());
+	var start = Date.now();
 	cachedRequest(
 	    {
 	    method: 'POST',
@@ -35,7 +36,12 @@ function post(trainId, callback, res){
 	    		return;
 	    	}
 	        if (!error && response.statusCode == 200) {
-	            timeUpdated = new Date();
+	            lastUpdated = new Date().toLocaleTimeString();
+	            stop = Date.now()
+	            processTime = (stop - start) / 1000;
+	            body = JSON.parse(body)
+	            body.processTime = processTime;
+	            body.lastUpdated = lastUpdated;
 	            callback(body, res);
 	        }
 	    }
@@ -44,7 +50,7 @@ function post(trainId, callback, res){
 
 function prepareData(data, res) {
 	// merge data into new object
-	data = JSON.parse(data);
+	//data = JSON.parse(data);
 	var stops = [],
 		tempStops = [],
 		l = {};
@@ -53,6 +59,7 @@ function prepareData(data, res) {
 		console.log('No train with this number');
 		return;
 	}
+	var processTime = data.processTime;
 	var data = data.RESPONSE.RESULT[0].TrainAnnouncement;
 
 	data.forEach(function(loc){
@@ -71,10 +78,10 @@ function prepareData(data, res) {
 			return;
 		}
 	});
-	displayData(stops, res);
+	displayData(stops, res, processTime);
 }
 
-function displayData(stops, res) {
+function displayData(stops, res, processTime) {
 	// create html and write response
 	var output = {};
 	output['stops'] = [];
@@ -95,10 +102,12 @@ function displayData(stops, res) {
 			track: stop.Avgang.TrackAtLocation ? stop.Avgang.TrackAtLocation : false,
 			deviation: stop.Deviation ? stop.Deviation : false,
 			real_ank: stop.Ankomst.TimeAtLocation ? parseTime(stop.Ankomst.TimeAtLocation) : false,
-			ber_avg: stop.Avgang.EstimatedTimeAtLocation ? parseTime(stop.Avgang.EstimatedTimeAtLocation) : false
+			ber_avg: stop.Avgang.EstimatedTimeAtLocation ? parseTime(stop.Avgang.EstimatedTimeAtLocation) : false,
 		};
 		output.stops.push(stop_data)
 	});
+	output['processTime'] = processTime;
+	output['lastUpdated'] = lastUpdated;
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost')
 	res.writeHead(200, {'Content-type': 'text/plain'});
 	res.end(JSON.stringify(output));
