@@ -1,9 +1,12 @@
 $(document).ready(function(){ 
 	var content = $('#content');
+	var trainId = location.search.substring(1);
 	var stops;
 	var display_template = '<tr><td><strong>{location}</strong></td><td>{ank_time}</td><td>{avg_time}</td><td>{track}</td>{deviation}</tr>';
-	var output = '<table><th></th><th>Ankomst <small><i>verklig</i></small></th><th>Avgång <small><i>beräknad</i></small></th><th>Spår</th>';
-	var trainId = location.search.substring(1);
+	var output = 	'<h2>Tåg ' + trainId + '</h2>'+
+					'<table><th></th><th>Ankomst <small><i>verklig</i></small></th>'+
+					'<th>Avgång <small><i>beräknad</i></small></th><th>Spår</th>';
+	document.title = 'Tåg ' + trainId;
 	$.getJSON('http://localhost:3000/' + trainId, function(data) {
 		data['stops'].forEach(function(stop){
 		
@@ -20,7 +23,10 @@ $(document).ready(function(){
 
 
 		});
-		output += '</table>'
+		output += 	'</table>'+
+					'<p><small>Hämtningen tog ' + data.processTime +
+					' sek. Uppdaterades senast ' + data.lastUpdated +
+					'</small></p>'
 		content.html(output);
 	});
 });
