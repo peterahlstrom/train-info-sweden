@@ -91,6 +91,7 @@ function displayData(stops, res, processTime) {
 			return timeString.split('T').slice(-1).toString().substring(0,5);
 		}
 	}
+
 	stops.forEach(function(s){
 		var loc = Object.keys(s)[0]
 		var p = '<p>';
@@ -100,10 +101,12 @@ function displayData(stops, res, processTime) {
 			ank_time: stop.Ankomst.AdvertisedTimeAtLocation ? parseTime(stop.Ankomst.AdvertisedTimeAtLocation) : false,
 			avg_time: stop.Avgang.AdvertisedTimeAtLocation ? parseTime(stop.Avgang.AdvertisedTimeAtLocation) : false,
 			track: stop.Avgang.TrackAtLocation ? stop.Avgang.TrackAtLocation : false,
-			deviation: stop.Deviation ? stop.Deviation : false,
+			ank_deviation: stop.Ankomst.Deviation ? stop.Ankomst.Deviation.join('|') : '',
+			avg_deviation: stop.Avgang.Deviation ? stop.Avgang.Deviation.join('|') : '',
 			real_ank: stop.Ankomst.TimeAtLocation ? parseTime(stop.Ankomst.TimeAtLocation) : false,
 			ber_avg: stop.Avgang.EstimatedTimeAtLocation ? parseTime(stop.Avgang.EstimatedTimeAtLocation) : false,
 		};
+		stop_data.deviation = stop_data.ank_deviation === stop_data.avg_deviation ? stop_data.ank_deviation : stop_data.ank_deviation + stop_data.avg_deviation;
 		output.stops.push(stop_data)
 	});
 	output['processTime'] = processTime;
