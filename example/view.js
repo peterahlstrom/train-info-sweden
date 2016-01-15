@@ -19,7 +19,7 @@ $(document).ready(function(){
 			.replace('{avg_time}', stop.avg_time ? stop.avg_time : '')
 			.replace('{location}', stop.location ? stop.location : '')
 			.replace('{track}', stop.track ? stop.track : '')
-			.replace('{deviation}', stop.deviation ? '<td>'+stop.deviation+'</td>' : '');
+			.replace('{deviation}', stop.deviation ? '<td style="background-color: white;">'+stop.deviation+'</td>' : '');
 
 
 		});

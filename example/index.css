@@ -20,6 +20,9 @@ tr:nth-child(odd) {
 small {
 	font-weight: normal;
 }
+table {
+	border-spacing: 0;
+}
 th {
 	text-align: left;
 }
